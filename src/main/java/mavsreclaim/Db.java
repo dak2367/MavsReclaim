@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
-
 public class Db {
   private static final String URL = "jdbc:sqlite:mavsreclaim.db";
 
@@ -153,10 +152,30 @@ public class Db {
           return;
       }
 
-      Map<String, Integer> lockersPerBuilding = Map.of(
-          "Nedderman Hall", 5,
-          "Central Library", 5,
-          "Engineering Research Building", 5);
+ 
+      Map<String, Integer> lockersPerBuilding = Map.ofEntries(
+          Map.entry("Central Library", 5),
+          Map.entry("University Center", 5),
+          Map.entry("Nedderman Hall", 5),
+          Map.entry("Engineering Lab Building", 5),
+          Map.entry("Engineering Research Building", 5),
+          Map.entry("Woolf Hall", 5),
+          Map.entry("Science Hall", 5),
+          Map.entry("Life Science Building", 5),
+          Map.entry("Chemistry & Physics Building", 5),
+          Map.entry("Business Building", 5),
+          Map.entry("University Hall", 5),
+          Map.entry("Trimble Hall", 5),
+          Map.entry("Hammond Hall", 5),
+          Map.entry("Pickard Hall", 5),
+          Map.entry("Preston Hall", 5),
+          Map.entry("Ransom Hall", 5),
+          Map.entry("Carlisle Hall", 5),
+          Map.entry("College Hall", 5),
+          Map.entry("Texas Hall", 5),
+          Map.entry("Maverick Activities Center", 5),
+          Map.entry("Fine Arts Building", 5),
+          Map.entry("Physical Education Building", 5));
 
       try (PreparedStatement p = c.prepareStatement(
           "INSERT INTO lockers (building, in_use) VALUES (?, 0)")) {
