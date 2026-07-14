@@ -57,7 +57,7 @@ public class Emailer {
           Found at: %s
 
           No lockers are currently free in that building — please take the
-          item to the front desk instead.
+          item to the Lost and Found Office instead.
           """.formatted(item.description(), item.building());
     } else {
       body = """
