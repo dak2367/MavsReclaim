@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS lockers (
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    building TEXT NOT NULL,
+    in_use   INTEGER NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS items (
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    description  TEXT NOT NULL,
+    category     TEXT NOT NULL,
+    building     TEXT NOT NULL,
+    finder_email TEXT NOT NULL,
+    locker_id    INTEGER,
+    pin          TEXT,
+    status       TEXT NOT NULL DEFAULT 'stored',
+    created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (locker_id) REFERENCES lockers(id)
+);
+
+CREATE TABLE IF NOT EXISTS claims (
+    id             INTEGER PRIMARY KEY AUTOINCREMENT,
+    description    TEXT NOT NULL,
+    category       TEXT NOT NULL,
+    building       TEXT NOT NULL,
+    claimant_email TEXT NOT NULL,
+    status         TEXT NOT NULL DEFAULT 'pending',
+    matched_item   INTEGER,
+    created_at     TEXT NOT NULL DEFAULT (datetime('now')),
+    FOREIGN KEY (matched_item) REFERENCES found_items(id)
+);
