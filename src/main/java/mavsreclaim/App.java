@@ -2,6 +2,8 @@ package mavsreclaim;
 
 import io.javalin.Javalin;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
   public static void main(String[] args) {
@@ -47,6 +49,30 @@ public class App {
       ctx.json(item);
     });
 
+    app.get("/test/add2", ctx -> {
+      Db.addFoundItem("Blue Hydroflask",
+          "bottle",
+          "Nedderman Hall",
+          "kxm2572@mavs.uta.edu");
+      Db.addFoundItem("Airpods",
+          "headphones",
+          "Nedderman Hall",
+          "kxm2572@mavs.uta.edu");
+      Db.addFoundItem("Red Hydroflask",
+          "bottle",
+          "Nedderman Hall",
+          "kxm2572@mavs.uta.edu");
+      Db.addFoundItem("Blue Hydroflask",
+          "bottle",
+          "University Hall",
+          "kxm2572@mavs.uta.edu");
+      ctx.result("4 items added");
+    });
+
+    app.get("test/admin", ctx -> {
+      List<FoundItem> results = Db.searchItems("Nedderman Hall", "bottle", "2026-07-15");
+      ctx.json(results);
+    });
     app.get("/test/claim/{id}", ctx -> {
       int id = Integer.parseInt(ctx.pathParam("id"));
       FoundItem item = Db.findItem(id);

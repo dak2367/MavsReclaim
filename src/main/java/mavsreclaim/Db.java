@@ -222,7 +222,7 @@ public class Db {
     String sql = """
            SELECT *, (category = ?) as cat_match,
            abs(julianday(created_at) - julianday(?)) as gap
-           FROM found_items
+           FROM items
            WHERE building = ? AND status = 'stored'
            ORDER BY cat_match DESC, gap ASC
         """;
