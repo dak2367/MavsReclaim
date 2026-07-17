@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
 
 public class Db {
   private static final String URL = "jdbc:sqlite:mavsreclaim.db";
@@ -152,7 +154,6 @@ public class Db {
           return;
       }
 
- 
       Map<String, Integer> lockersPerBuilding = Map.ofEntries(
           Map.entry("Central Library", 5),
           Map.entry("University Center", 5),
@@ -200,6 +201,42 @@ public class Db {
         ResultSet rs = p.executeQuery()) {
       while (rs.next())
         out.add(rs.getString("building"));
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    return out;
+  }
+
+  // My submission for our query for the admin seartch panel
+  // it should rnak items closest to the date the they lostOn and list exact
+  // category matches first
+  // but should still show others in case someone labels airpods misc and not
+  // headphones for example
+  public static List<FoundItem> searchItems(String building, String category, String lostOn) {
+    try {
+      LocalDate.parse(lostOn);
+    } catch (DateTimeParseException e) {
+      throw new IllegalArgumentException("Invalid date: " + lostOn);
+    }
+    List<FoundItem> out = new ArrayList<>();
+    String sql = """
+           SELECT *, (category = ?) as cat_match,
+           abs(julianday(created_at) - julianday(?)) as gap
+           FROM found_items
+           WHERE building = ? AND status = 'stored'
+           ORDER BY cat_match DESC, gap ASC
+        """;
+
+    try (Connection c = connect();
+        PreparedStatement p = c.prepareStatement(sql)) {
+      p.setString(1, category);
+      p.setString(2, lostOn);
+      p.setString(3, building);
+      try (ResultSet rs = p.executeQuery()) {
+        while (rs.next()) {
+          out.add(fromRow(rs));
+        }
+      }
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
