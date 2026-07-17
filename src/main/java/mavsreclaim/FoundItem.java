@@ -1,5 +1,6 @@
 package mavsreclaim;
 
+<<<<<<< HEAD
 public class FoundItem 
 {
     private int id;
@@ -33,3 +34,8 @@ public class FoundItem
     public String pin() { return pin; }
     public String status() { return status; }
 }
+=======
+ 
+public record FoundItem(int id, String description, String category, String building,
+                        String finderEmail, Integer lockerId, String pin, String status, String createdAt) {}
+>>>>>>> 66b9823ab0a5804ffc6db7817660560829caaa27

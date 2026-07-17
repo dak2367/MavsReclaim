@@ -57,7 +57,7 @@ public class Db {
 
         ResultSet keys = p.getGeneratedKeys();
         int id = keys.next() ? keys.getInt(1) : -1;
-        return new FoundItem(id, desc, category, building, finderEmail, lockerId, pin, "stored");
+        return new FoundItem(id, desc, category, building, finderEmail, lockerId, pin, "stored", null);
       }
     } catch (SQLException e) {
       throw new RuntimeException(e);
@@ -144,7 +144,7 @@ public class Db {
     return new FoundItem(
         rs.getInt("id"), rs.getString("description"), rs.getString("category"),
         rs.getString("building"), rs.getString("finder_email"),
-        rs.wasNull() ? null : locker, rs.getString("pin"), rs.getString("status"));
+        rs.wasNull() ? null : locker, rs.getString("pin"), rs.getString("status"), rs.getString("created_at"));
   }
 
   public static void seedLockers() {
