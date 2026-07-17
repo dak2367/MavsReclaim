@@ -1,6 +1,7 @@
 package mavsreclaim;
 
-<<<<<<< HEAD
+// MIGHT HAVE MESSED SOMETHING UP IN GIT, DONT KNOW IF I OVERWROTE SOMEONES WORK OR NOT EDIT AS NEEDED - David
+
 public class FoundItem 
 {
     private int id;
@@ -34,8 +35,3 @@ public class FoundItem
     public String pin() { return pin; }
     public String status() { return status; }
 }
-=======
- 
-public record FoundItem(int id, String description, String category, String building,
-                        String finderEmail, Integer lockerId, String pin, String status, String createdAt) {}
->>>>>>> 66b9823ab0a5804ffc6db7817660560829caaa27
