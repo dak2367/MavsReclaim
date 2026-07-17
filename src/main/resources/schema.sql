@@ -26,5 +26,5 @@ CREATE TABLE IF NOT EXISTS claims (
     status         TEXT NOT NULL DEFAULT 'pending',
     matched_item   INTEGER,
     created_at     TEXT NOT NULL DEFAULT (datetime('now')),
-    FOREIGN KEY (matched_item) REFERENCES found_items(id)
+    FOREIGN KEY (matched_item) REFERENCES items(id)
 );
